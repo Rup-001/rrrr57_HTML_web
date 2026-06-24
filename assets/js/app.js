@@ -42,6 +42,10 @@
       });
     });
 
+    menu.querySelectorAll(':scope > li').forEach(function (item) {
+      item.classList.remove('open');
+    });
+
     var active = menu.querySelector('a.active');
     if (active) {
       var parentLi = active.closest('li');

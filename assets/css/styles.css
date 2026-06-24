@@ -476,26 +476,50 @@ nav { border-top: 5px solid green; background: rgba(255,255,255,0.9); }
 
 /* Portal layout */
 .portal-body { background: #f5f5f5; min-height: 100vh; display: flex; flex-direction: column; }
-.portal-body #main { flex: 1; }
+.portal-body #main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding-inline: 1rem;
+  box-sizing: border-box;
+}
+
+.portal-body #bannar,
+.portal-body .nav-bottom-link,
+.portal-body .footer-content--portal {
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-inline: 1rem;
+  box-sizing: border-box;
+}
 
 #data {
   margin: 0 auto;
-  width: min(100%, 1500px);
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
   background: #fff;
   box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+  overflow: hidden;
+}
+
+#data::after {
+  content: "";
+  display: table;
+  clear: both;
 }
 
 .side {
   width: 280px;
-  flex-shrink: 0;
+  float: right;
   padding-top: 15px;
 }
 
 .data_new {
-  flex: 1;
-  min-width: 0;
+  width: calc(100% - 300px);
+  display: inline-block;
+  vertical-align: top;
+  margin-right: auto;
   padding: 10px 10px 0;
   border-right: 1px solid #dfdfdf;
   min-height: 500px;
@@ -505,8 +529,9 @@ nav { border-top: 5px solid green; background: rgba(255,255,255,0.9); }
 .navigation { background: #262626; }
 
 #newmenu {
+  float: left;
   width: 280px;
-  border-right: 1px solid rgba(204,204,204,0.58);
+  border-right: 1px solid rgba(204, 204, 204, 0.58);
   border-left: 1px solid #ccc;
   padding: 0;
   margin: 0;
@@ -519,23 +544,16 @@ nav { border-top: 5px solid green; background: rgba(255,255,255,0.9); }
   background: #01833e;
   border-top: 1px solid #eee;
   border-bottom: 1px solid #999;
+  text-decoration: none;
   color: #fff;
   cursor: pointer;
 }
 
 #newmenu > li > a:hover,
-#newmenu > li.open > a {
-  background: rgba(73,73,72,0.79);
+#newmenu > li > a.active {
+  background: rgba(73, 73, 72, 0.79);
+  color: #fff;
 }
-
-#newmenu > li > a::after {
-  content: "\25BC";
-  float: left;
-  font-size: 10px;
-  margin-top: 4px;
-}
-
-#newmenu > li.open > a::after { content: "\25B2"; }
 
 #newmenu li ul {
   display: none;
@@ -548,22 +566,30 @@ nav { border-top: 5px solid green; background: rgba(255,255,255,0.9); }
 
 #newmenu li ul li a {
   display: block;
-  padding: 10px 15px 10px 30px;
+  padding: 10px 15px;
   background: #ececec;
   border-bottom: 1px dotted #ccc;
   color: #828282;
+  text-decoration: none;
+  width: 100%;
 }
 
-#newmenu li ul li a:hover,
-#newmenu li ul li a.active {
-  background: rgba(73,73,72,0.79);
+#newmenu li ul li a:hover {
+  background: rgba(73, 73, 72, 0.79);
   color: #fff;
 }
 
-#newmenu li ul li a::before {
-  content: "\2039";
-  margin-left: 8px;
-  color: #b3b3b3;
+#newmenu li ul li a.active {
+  background: #70706f;
+  color: #fff;
+}
+
+#newmenu > li > ul > li::before,
+#newmenu li ul li a::before,
+#newmenu li ul li a::after,
+#newmenu > li > a::after {
+  display: none !important;
+  content: none !important;
 }
 
 /* Student info bar */
@@ -668,6 +694,10 @@ table tr td { padding: 4px; }
   text-align: center;
 }
 
+.profile-block {
+  margin-top: 10px;
+}
+
 .profile-block fieldset {
   border: 1px solid #ccc;
   margin: 0 0 20px;
@@ -680,7 +710,7 @@ table tr td { padding: 4px; }
 }
 
 .myinfo {
-  padding-top: 20px;
+  padding-top: 30px;
   overflow: hidden;
 }
 
@@ -704,40 +734,82 @@ table tr td { padding: 4px; }
   border: 2px solid #fff;
 }
 
+.myinfo,
 #user-info {
   direction: rtl;
   padding: 15px 15px 0;
   width: 100%;
+  overflow: hidden;
 }
 
+.myinfo > ul.right,
 #user-info > ul.right {
-  width: calc(100% - 200px);
+  width: 75%;
   float: right;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
+.myinfo .info-photo + ul.right,
+#user-info .info-photo ~ ul.right {
+  width: calc(100% - 200px);
+}
+
+.myinfo > ul > li,
 #user-info > ul > li {
+  height: auto;
+  min-height: 20px;
   margin-bottom: 12px;
   overflow: hidden;
 }
 
+.myinfo > ul > li.info-topic,
 #user-info > ul > li.info-topic {
   width: 36%;
   float: right;
   font-weight: 700;
 }
 
+.myinfo > ul > li.info-content,
 #user-info > ul > li.info-content {
-  float: right;
   width: 64%;
+  float: right;
 }
 
+.myinfo > ul > li.info-content a,
+#user-info > ul > li.info-content a {
+  margin-right: 10px;
+  color: #538d00;
+  float: right;
+}
+
+.myinfo > ul > li.info-content.has-icon h4,
+#user-info > ul > li.info-content.has-icon h4 {
+  float: right;
+}
+
+.myinfo > ul > li.info-content:has(table) {
+  width: 100%;
+  clear: both;
+  float: none;
+}
+
+.myinfo > ul > li.info-topic:has(+ li.info-content table) {
+  width: 100%;
+  clear: both;
+  float: none;
+}
+
+.myinfo h4,
 #user-info h4 {
   margin: 0;
   font-size: 12px;
   font-weight: normal;
+}
+
+.myinfo-wide > ul.right {
+  width: 100%;
 }
 
 .HEADING_CENTER {
@@ -821,15 +893,23 @@ table tr td { padding: 4px; }
 
   #data {
     width: 100%;
-    flex-direction: column;
   }
 
-  .side { width: 100%; padding: 10px; }
+  .side {
+    width: 100%;
+    float: none;
+    padding: 10px;
+  }
 
-  #newmenu { width: 100%; }
+  #newmenu {
+    width: 100%;
+    float: none;
+  }
 
   .data_new {
     width: 100% !important;
+    display: block;
+    float: none;
     border-right: none;
     border-top: 1px solid #dfdfdf;
   }
@@ -879,32 +959,6 @@ table tr td { padding: 4px; }
   }
 
   .Visitors ul { padding: 10px 0; }
-
-  .myinfo .info-photo {
-    float: none;
-    width: 100%;
-    margin-bottom: 15px;
-  }
-
-  #user-info > ul.right {
-    width: 100%;
-    float: none;
-  }
-
-  #user-info > ul > li.info-topic,
-  #user-info > ul > li.info-content {
-    width: 100%;
-    float: none;
-  }
-
-  .infostudent table,
-  .infostudent tr,
-  .infostudent td {
-    display: block;
-    width: 100% !important;
-  }
-
-  .infostudent td:empty { display: none; }
 }
 
 @media (max-width: 768px) {
@@ -940,6 +994,35 @@ table tr td { padding: 4px; }
 
 @media (max-width: 600px) {
   #main { display: block; width: 100%; }
+
+  .myinfo .info-photo {
+    float: none;
+    width: 100%;
+    margin-bottom: 15px;
+  }
+
+  .myinfo > ul.right,
+  #user-info > ul.right {
+    width: 100%;
+    float: none;
+  }
+
+  .myinfo > ul > li.info-topic,
+  .myinfo > ul > li.info-content,
+  #user-info > ul > li.info-topic,
+  #user-info > ul > li.info-content {
+    width: 100%;
+    float: none;
+  }
+
+  .infostudent table,
+  .infostudent tr,
+  .infostudent td {
+    display: block;
+    width: 100% !important;
+  }
+
+  .infostudent td:empty { display: none; }
 
   .nav-bottom-link {
     height: auto;
