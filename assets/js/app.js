@@ -11,13 +11,30 @@
   function initLogin() {
     var form = document.getElementById('loginForm');
     if (!form) return;
+    var validPassword = 'Salem1988';
+    var errorRow = document.getElementById('loginErrorRow');
+
+    function hideLoginError() {
+      if (errorRow) errorRow.hidden = true;
+    }
+
+    function showLoginError() {
+      if (errorRow) errorRow.hidden = false;
+    }
+
+    form.querySelectorAll('#username, #password').forEach(function (input) {
+      input.addEventListener('input', hideLoginError);
+    });
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
       var username = document.getElementById('username');
-      if (!username || !username.value.trim()) {
-        alert('الرجاء إدخال اسم المستخدم');
+      var password = document.getElementById('password');
+      if (!username || !username.value.trim() || !password || password.value !== validPassword) {
+        showLoginError();
         return;
       }
+      hideLoginError();
       window.location.href = 'portal/index.html';
     });
   }
